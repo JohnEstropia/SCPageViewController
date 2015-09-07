@@ -27,9 +27,9 @@
  * @param animated whether the change should be animated
  * @param completion the block to be called when the transition is over
  */
-- (void)setLayouter:(id<SCPageLayouterProtocol>)layouter
+- (void)setLayouter:(nullable id<SCPageLayouterProtocol>)layouter
 		   animated:(BOOL)animated
-		 completion:(void(^)())completion;
+		 completion:(nullable void(^)())completion;
 
 
 /** Sets the layouter and also focuses on the given index
@@ -38,10 +38,10 @@
  * @param animated whether the change should be animated
  * @param completion the block to be called when the transition is over
  */
-- (void)setLayouter:(id<SCPageLayouterProtocol>)layouter
+- (void)setLayouter:(nullable id<SCPageLayouterProtocol>)layouter
 	andFocusOnIndex:(NSUInteger)pageIndex
 		   animated:(BOOL)animated
-		 completion:(void(^)())completion;
+		 completion:(nullable void(^)())completion;
 
 
 /** Reloads and re-lays out all the pages */
@@ -53,7 +53,7 @@
  * @param animated whether the reload should be animated
  * @param completion the block to be called when the pages have been reloaded
  */
-- (void)reloadPagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated completion:(void(^)())completion;
+- (void)reloadPagesAtIndexes:(nonnull NSIndexSet *)indexes animated:(BOOL)animated completion:(nullable void(^)())completion;
 
 
 /** Inserts new pages at the given indexes
@@ -61,7 +61,7 @@
  * @param animated whether the insertions should be animated
  * @param completion the block to be called when the pages have been inserted
  */
-- (void)insertPagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated completion:(void(^)())completion;
+- (void)insertPagesAtIndexes:(nonnull NSIndexSet *)indexes animated:(BOOL)animated completion:(nullable void(^)())completion;
 
 
 /** Removes the pages from the given indexes
@@ -69,7 +69,7 @@
  * @param animated whether the deletions should be animated
  * @param completion the block to be called when the pages have been deleted
  */
-- (void)deletePagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated completion:(void(^)())completion;
+- (void)deletePagesAtIndexes:(nonnull NSIndexSet *)indexes animated:(BOOL)animated completion:(nullable void(^)())completion;
 
 
 /** Moves a page from one index to another
@@ -78,7 +78,7 @@
  * @param animated whether the move should be animated
  * @param completion the block to be called when the page has been moved
  */
-- (void)movePageAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex animated:(BOOL)animated completion:(void(^)())completion;
+- (void)movePageAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex animated:(BOOL)animated completion:(nullable void(^)())completion;
 
 
 /** Navigates to the given page index
@@ -88,7 +88,7 @@
  */
 - (void)navigateToPageAtIndex:(NSUInteger)pageIndex
 					 animated:(BOOL)animated
-				   completion:(void(^)())completion;
+				   completion:(nullable void(^)())completion;
 
 
 /**
@@ -100,37 +100,37 @@
  * PageController's scrollView bounds and not covered by any other view)
  * Ranges from 0.0f to 1.0f
  */
-- (CGFloat)visiblePercentageForViewController:(UIViewController *)viewController;
+- (CGFloat)visiblePercentageForViewController:(nonnull UIViewController *)viewController;
 
 
 /** Retrieves the view controller for the given page, if loaded, nil otherwise
  * @param pageIndex The page index you want to retrieve the view controller for
  * @return the view controller for the given page index if already loaded, nil otherwise
  */
-- (UIViewController *)viewControllerForPageAtIndex:(NSUInteger)pageIndex;
+- (nullable UIViewController *)viewControllerForPageAtIndex:(NSUInteger)pageIndex;
 
 
 /** Retrieves the page index for the given view controller
  * @param viewController The viewController for which to retrieve the page index
  * @return The page index for the given view controller or NSNotFound
  */
-- (NSUInteger)pageIndexForViewController:(UIViewController *)viewController;
+- (NSUInteger)pageIndexForViewController:(nonnull UIViewController *)viewController;
 
 
 /** Currently used layouter */
-@property (nonatomic, readonly) id<SCPageLayouterProtocol> layouter;
+@property (nonatomic, readonly, nullable) id<SCPageLayouterProtocol> layouter;
 
 
 /** The page view controller's data source */
-@property (nonatomic, weak) id<SCPageViewControllerDataSource> dataSource;
+@property (nonatomic, weak, nullable) id<SCPageViewControllerDataSource> dataSource;
 
 
 /** The page view controller's delegate */
-@property (nonatomic, weak) id<SCPageViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<SCPageViewControllerDelegate> delegate;
 
 
 /** The internal scroll view */
-@property (nonatomic, strong, readonly) SCScrollView *scrollView;
+@property (nonatomic, strong, readonly, nonnull) SCScrollView *scrollView;
 
 
 /** The current page in the page view controller */
@@ -146,11 +146,11 @@
 
 
 /** An array of currently loaded view controllers in the page view controller */
-@property (nonatomic, readonly) NSArray *loadedViewControllers;
+@property (nonatomic, readonly, nonnull) NSArray<__kindof UIViewController *> *loadedViewControllers;
 
 
 /** An array of currently visible view controllers in the page view controller */
-@property (nonatomic, readonly) NSArray *visibleViewControllers;
+@property (nonatomic, readonly, nonnull) NSArray<__kindof UIViewController *> *visibleViewControllers;
 
 
 /** A Boolean value that determines whether paging is enabled for the pageController's
@@ -183,7 +183,7 @@
  *
  * Default value is set to SCEasingFunctionTypeSineEaseInOut
  */
-@property (nonatomic, strong) id<SCEasingFunctionProtocol> easingFunction;
+@property (nonatomic, strong, nonnull) id<SCEasingFunctionProtocol> easingFunction;
 
 
 /** Animation duration used when navigating beteen pages
@@ -203,7 +203,7 @@
  * @param pageViewController The calling PageViewController
  * @return Number of items in the page view controller
  */
-- (NSUInteger)numberOfPagesInPageViewController:(SCPageViewController *)pageViewController;
+- (NSUInteger)numberOfPagesInPageViewController:(nonnull SCPageViewController *)pageViewController;
 
 
 /**
@@ -211,7 +211,7 @@
  * @param pageIndex The index for which to retrieve the view controller
  * @return The view controller to be uses for the given index
  */
-- (UIViewController *)pageViewController:(SCPageViewController *)pageViewController viewControllerForPageAtIndex:(NSUInteger)pageIndex;
+- (nullable UIViewController *)pageViewController:(nonnull SCPageViewController *)pageViewController viewControllerForPageAtIndex:(NSUInteger)pageIndex;
 
 @end
 
@@ -230,8 +230,8 @@
  * A view controller is visible when any part of it is visible (within the
  * internal scrollView's bounds and not covered by any other view)
  */
-- (void)pageViewController:(SCPageViewController *)pageViewController
-	 didShowViewController:(UIViewController *)controller
+- (void)pageViewController:(nonnull SCPageViewController *)pageViewController
+	 didShowViewController:(nonnull UIViewController *)controller
 				   atIndex:(NSUInteger)index;
 
 
@@ -243,8 +243,8 @@
  * A view controller is hidden when it view's frame rests outside the pageController's
  * scrollView bounds or when it is fully overlapped by other views
  */
-- (void)pageViewController:(SCPageViewController *)pageViewController
-	 didHideViewController:(UIViewController *)controller
+- (void)pageViewController:(nonnull SCPageViewController *)pageViewController
+	 didHideViewController:(nonnull UIViewController *)controller
 				   atIndex:(NSUInteger)index;
 
 
@@ -252,7 +252,7 @@
  * @param pageViewController The calling PageViewController
  * @param offset The current offset in the PageViewController's scrollView
  */
-- (void)pageViewController:(SCPageViewController *)pageViewController
+- (void)pageViewController:(nonnull SCPageViewController *)pageViewController
 	   didNavigateToOffset:(CGPoint)offset;
 
 
@@ -261,7 +261,7 @@
  * @param pageViewController The calling PageViewController
  * @param pageIndex The index of the page
  */
-- (void)pageViewController:(SCPageViewController *)pageViewController
+- (void)pageViewController:(nonnull SCPageViewController *)pageViewController
   didNavigateToPageAtIndex:(NSUInteger)pageIndex;
 
 @end
